@@ -206,3 +206,7 @@
   background: #7fa6e9;
   border: 2px solid #2D3E6E;
 }
+
+.icon {
+  max-width: 50px;
+}
