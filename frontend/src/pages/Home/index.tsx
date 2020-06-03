@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiLogIn } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 
 import './styles.css'
 import logo from '../../assets/logo.svg'
@@ -18,12 +19,12 @@ const Home = () => {
                     <h1>Garbage Management Marketplace</h1>
                     <p>Helping people to find ecological and efficient waste disposal points.</p>
 
-                    <a href="/register">
+                    <Link to="/create-point">
                         <span>
                            <FiLogIn />
                         </span>
                         <strong>Register a disposal point</strong>
-                    </a>
+                    </Link>
                 </main>
             </div>
         </div>
