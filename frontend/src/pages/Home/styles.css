@@ -18,13 +18,15 @@
 }
 
 #page-home .content header {
-  margin: 48px 0 0;
-  display: inline-block;
-  
+  margin-top: 48px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #page-home .content header img {
-  width: 15%;
+  width: 10%;
 }
 
 #page-home .content main {
@@ -64,7 +66,7 @@
 
 #page-home .content main a span {
   display: block;
-  background: rgba(0, 0, 0, 0.08);
+  background: #00000014;
   width: 72px;
   height: 72px;
 
