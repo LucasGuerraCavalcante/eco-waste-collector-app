@@ -2,6 +2,7 @@ import React, { useEffect, useState, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Map, TileLayer, Marker } from 'react-leaflet'
+import { LeafletMouseEvent } from 'leaflet'
 import axios from 'axios'
 
 import api from '../../services/api'
@@ -31,6 +32,8 @@ const CreatePoint = () => {
     const [cities, setCities] = useState<string[]>([])
 
     const [selectedState, setSelectedState] = useState('0')
+    const [selectedCity, setSelectedCity] = useState('0')
+    const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0])
 
     useEffect(() => {
         api.get('items').then(response => {
@@ -61,6 +64,18 @@ const CreatePoint = () => {
     function handleSelectState(event: ChangeEvent<HTMLSelectElement>) {
         const state = event.target.value
         setSelectedState(state)
+    }
+
+    function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
+        const city = event.target.value
+        setSelectedCity(city)
+    }
+
+    function handleMapClick(event: LeafletMouseEvent ) {
+        setSelectedPosition([
+            event.latlng.lat,
+            event.latlng.lng
+        ])
     }
 
     return (
@@ -118,13 +133,13 @@ const CreatePoint = () => {
                         <span>Select the address on the map</span>
                     </legend>
 
-                    <Map center={[-15.7868392,-47.8723759]} zoom={15}>
+                    <Map center={[-15.7868392,-47.8723759]} zoom={15} onClick={handleMapClick}>
                         <TileLayer
                             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
 
-                        <Marker position={[-15.7868392,-47.8723759]} />
+                        <Marker position={selectedPosition} />
                     </Map>
 
                     <div className="field-group">
@@ -145,7 +160,12 @@ const CreatePoint = () => {
 
                         <div className="field">
                             <label htmlFor="city">City</label>
-                            <select name="city" id="city">
+                            <select 
+                                name="city"  
+                                id="city"
+                                value={selectedCity}
+                                onChange={handleSelectCity}
+                            >
                                 <option value="0">Select the city</option>
                                 { cities.map(city => (
                                     <option key={city} value={city}>{city}</option>
