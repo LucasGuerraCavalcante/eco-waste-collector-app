@@ -11,7 +11,7 @@ const Home = () => {
             <div className="content">
                 <header>
                     <img src={logo} alt="Ecological Waste Management" />
-                    <h3>Ecological Waste Management</h3>
+                    <h3>Ecological Management</h3>
                 </header>
                 
 

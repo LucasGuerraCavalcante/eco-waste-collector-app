@@ -5,7 +5,10 @@ const Home = () => {
     return (
         <View style={styles.container}>
             <View style={styles.main}>
-                <Image source={require('../../assets/logo.png')} style={{height: 40, width: 40}}/>
+                <View style={styles.logo}>
+                    <Image source={require('../../assets/logo.png')} style={{height: 40, width: 40}}/>
+                    <Text style={styles.description}>Ecological Management</Text>
+                </View>
                 <Text style={styles.title}>Garbage Management Marketplace</Text>
                 <Text style={styles.description}>Helping people to find ecological and efficient waste disposal points.</Text>
             </View>
@@ -14,9 +17,15 @@ const Home = () => {
 }
 
 const styles = StyleSheet.create({
+
     container: {
       flex: 1,
       padding:32,
+    },
+
+    logo: {
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
   
     main: {
