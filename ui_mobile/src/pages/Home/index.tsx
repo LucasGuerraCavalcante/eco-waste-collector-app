@@ -1,9 +1,12 @@
 import React from 'react'
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { View, ImageBackground, Image, Text, StyleSheet } from 'react-native'
 
 const Home = () => {
     return (
-        <View style={styles.container}>
+        <ImageBackground 
+            style={styles.container} 
+            source={require('../../assets/home-background.png')} 
+        >
             <View style={styles.main}>
                 <View style={styles.logo}>
                     <Image source={require('../../assets/logo.png')} style={{height: 40, width: 40}}/>
@@ -12,7 +15,12 @@ const Home = () => {
                 <Text style={styles.title}>Garbage Management Marketplace</Text>
                 <Text style={styles.description}>Helping people to find ecological and efficient waste disposal points.</Text>
             </View>
-        </View>
+
+            <View style={styles.footer}>
+                
+
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -38,7 +46,7 @@ const styles = StyleSheet.create({
       fontSize: 32,
       fontFamily: 'Ubuntu_700Bold',
       maxWidth: 260,
-      marginTop: 64,
+      marginTop: 50,
     },
   
     description: {
