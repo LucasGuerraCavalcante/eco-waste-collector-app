@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react'
+import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Map, TileLayer, Marker } from 'react-leaflet'
@@ -112,7 +112,30 @@ const CreatePoint = () => {
         }
     }
 
-    // function handleSubmit
+    async function handleSubmit(event: FormEvent) {
+        event.preventDefault()
+
+        const { name, email, whatsapp } = formData
+        const uf = selectedState
+        const city = selectedCity
+        const [latitude, longitude] = selectedPosition
+        const items = selectedItems
+
+        const data = {
+            name,
+            email,
+            whatsapp,
+            uf,
+            city,
+            latitude,
+            longitude,
+            items
+        }
+
+        await api.post('points', data)
+
+        alert('Disposal Point Registered!')
+    }
 
     return (
         <div id="page-create-point">
@@ -127,7 +150,7 @@ const CreatePoint = () => {
                 </Link>
             </header>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1>Register a disposal point</h1>
 
                 <fieldset>
