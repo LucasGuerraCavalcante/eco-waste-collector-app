@@ -66,9 +66,10 @@ const Points = () => {
         params: {
           city: "Brasília",
           uf: "DF",
-          item: [1,2]
+          items: 5
         }
       }).then(response => {
+        console.log(response.data)
         setPoints(response.data)
       })
     }, [])
