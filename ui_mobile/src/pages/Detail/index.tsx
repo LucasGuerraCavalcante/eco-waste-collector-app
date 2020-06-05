@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
-import { View, Image, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Image, Text, StyleSheet, TouchableOpacity, SafeAreaView, Linking } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler'
 import * as MailComposer from 'expo-mail-composer'
@@ -50,6 +50,10 @@ const Detail = () => {
       })
     }
 
+    function handleWhatsapp() {
+      Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}`)
+    }
+
     if(!data.point) {
       return null
     }
@@ -80,7 +84,7 @@ const Detail = () => {
             <View style={styles.footer}>
                 <RectButton 
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={handleWhatsapp}
                 >
                     <FontAwesome name="whatsapp" size={20} color="#FFF"/>
                     <Text style={styles.buttonText}>Whatsapp</Text>
@@ -170,6 +174,6 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontFamily: 'Roboto_500Medium',
     },
-  });
+  })
 
 export default Detail
