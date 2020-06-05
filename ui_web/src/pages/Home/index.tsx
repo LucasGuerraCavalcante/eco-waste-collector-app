@@ -14,7 +14,6 @@ const Home = () => {
                     <h3>Ecological Management</h3>
                 </header>
                 
-
                 <main>
                     <h1>Garbage Management Marketplace</h1>
                     <p>Helping people to find ecological and efficient waste disposal points.</p>
