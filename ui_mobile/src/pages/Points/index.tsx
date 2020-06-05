@@ -3,7 +3,7 @@ import Constants from 'expo-constants'
 import { Feather as Icon } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import MapContainer from 'react-native-maps'
+import MapContainer, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
 
 const Points = () => {
@@ -27,7 +27,22 @@ const Points = () => {
                 </Text>
 
                 <View style={styles.mapContainer}>
-                    <MapContainer style={styles.map} />
+                    <MapContainer 
+                        initialRegion={{
+                            latitude: -15.7868392,
+                            longitude: -47.8723759,
+                            latitudeDelta: 0.014,
+                            longitudeDelta: 0.014
+                        }} 
+                        style={styles.map} 
+                    >
+                    <Marker
+                        coordinate={{
+                            latitude: -15.7868392,
+                            longitude: -47.8723759,
+                        }}
+                    />
+                    </MapContainer>
                 </View>
             </View>
             <View style={styles.itemsContainer}>
