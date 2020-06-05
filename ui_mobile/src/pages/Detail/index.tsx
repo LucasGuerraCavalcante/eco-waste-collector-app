@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
-import { View, Image, Text, StyleSheet, TouchableOpacity, SafeAreaView, Linking } from 'react-native'
+import { View, Image, Text, StyleSheet, 
+          TouchableOpacity, SafeAreaView, Linking } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler'
 import * as MailComposer from 'expo-mail-composer'
@@ -82,6 +83,7 @@ const Detail = () => {
                 </View>
             </View>
             <View style={styles.footer}>
+
                 <RectButton 
                     style={styles.button}
                     onPress={handleWhatsapp}
@@ -157,6 +159,15 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between'
     },
+
+    input: {
+      height: 60,
+      backgroundColor: '#FFF',
+      borderRadius: 10,
+      marginBottom: 8,
+      paddingHorizontal: 24,
+      fontSize: 16
+    },
     
     button: {
       width: '48%',
@@ -165,7 +176,8 @@ const styles = StyleSheet.create({
       height: 50,
       flexDirection: 'row',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginTop: 8
     },
 
     buttonText: {
