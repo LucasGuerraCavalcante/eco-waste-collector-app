@@ -2,7 +2,7 @@ import React from 'react'
 import Constants from 'expo-constants'
 import { Feather as Icon } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import MapContainer, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
 
@@ -34,14 +34,23 @@ const Points = () => {
                             latitudeDelta: 0.014,
                             longitudeDelta: 0.014
                         }} 
-                        style={styles.map} 
+                        style={styles.map}
                     >
-                    <Marker
-                        coordinate={{
-                            latitude: -15.7868392,
-                            longitude: -47.8723759,
-                        }}
-                    />
+                        <Marker
+                            style={styles.mapMarker} 
+                            coordinate={{
+                                latitude: -15.7868392,
+                                longitude: -47.8723759,
+                            }}
+                        >   
+                            <View style={styles.mapMarkerContainer}>
+                                <Image 
+                                    style={styles.mapMarkerImage} 
+                                    source={{ uri: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=60' }}>
+                                </Image>
+                                <Text style={styles.mapMarkerTitle}>Market</Text>
+                            </View>
+                        </Marker>
                     </MapContainer>
                 </View>
             </View>
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
     mapMarkerContainer: {
       width: 90,
       height: 70,
-      backgroundColor: '#34CB79',
+      backgroundColor: '#4E6CA0',
       flexDirection: 'column',
       borderRadius: 8,
       overflow: 'hidden',
