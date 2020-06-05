@@ -1,15 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
 import { View, Image, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler'
+import * as MailComposer from 'expo-mail-composer'
+
+import api from '../../services/api'
+
+interface Params {
+  point_id: number
+}
+
+interface Data {
+  point: {
+    image: string
+    name: string
+    email: string
+    whatsapp: string
+    city: string
+    uf: string
+  }
+  items: {
+    title: string
+  }[]
+}
 
 const Detail = () => {
 
+    const [data, setData] = useState<Data>({} as Data)
+
     const navigation = useNavigation()
+    const route = useRoute()
+    const routeParams = route.params as Params
+
+    useEffect(() => {
+      api.get(`points/${routeParams.point_id}`)
+        .then(response => {
+          setData(response.data)
+        })
+    }, [])
 
     function handleNavBack() {
         navigation.goBack()
+    }
+
+    function handleEmail() {
+      MailComposer.composeAsync({
+        recipients: [data.point.email]
+      })
+    }
+
+    if(!data.point) {
+      return null
     }
 
     return (
@@ -19,17 +61,19 @@ const Detail = () => {
                     <Icon name="arrow-left" size={20} color="#4E6CA0" ></Icon>
                 </TouchableOpacity>
 
-                <Image style={styles.pointImage} source={{ uri: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=60' }}></Image>
+                <Image style={styles.pointImage} source={{ uri: data.point.image  }}></Image>
 
-                <Text style={styles.pointName}>Mercado do Jorge</Text>
-                <Text style={styles.pointItems}>Mercado do Jorge</Text>
+                <Text style={styles.pointName}>{ data.point.name }</Text>
+                <Text style={styles.pointItems}>
+                  { data.items.map(item => item.title).join(', ') }
+                </Text>
 
                 <View style={styles.address}>
                     <Text style={styles.addressTitle}>
-                        Endereço
+                        Address
                     </Text>
                     <Text style={styles.addressContent}>
-                        Brasília, DF     
+                        { data.point.city }, { data.point.uf }            
                     </Text>
                 </View>
             </View>
@@ -44,7 +88,7 @@ const Detail = () => {
 
                 <RectButton 
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={handleEmail}
                 >
                     <Icon name="mail" size={20} color="#FFF"/>
                     <Text style={styles.buttonText}>E-mail</Text>
@@ -70,7 +114,7 @@ const styles = StyleSheet.create({
     },
   
     pointName: {
-      color: '#322153',
+      color: '#3d3944',
       fontSize: 28,
       fontFamily: 'Ubuntu_700Bold',
       marginTop: 24,
@@ -89,7 +133,7 @@ const styles = StyleSheet.create({
     },
     
     addressTitle: {
-      color: '#322153',
+      color: '#3d3944',
       fontFamily: 'Roboto_500Medium',
       fontSize: 16,
     },
