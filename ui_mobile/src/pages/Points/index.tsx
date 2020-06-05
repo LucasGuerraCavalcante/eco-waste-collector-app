@@ -15,9 +15,18 @@ interface Item {
   image_url: string
 }
 
+interface Points {
+  id: number
+  name: string
+  image: string
+  latitude: number
+  longitude: number
+}
+
 const Points = () => {
 
     const [items, setItems] = useState<Item[]>([])
+    const [points, setPoints] = useState<Points[]>([])
     const [selectedItems, setSelectedItems] = useState<number[]>([])
 
     const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0])
@@ -49,6 +58,18 @@ const Points = () => {
     useEffect(() => {
       api.get('items').then(response => {
         setItems(response.data)
+      })
+    }, [])
+
+    useEffect(() => {
+      api.get('points', {
+        params: {
+          city: "Brasília",
+          uf: "DF",
+          item: [1,2]
+        }
+      }).then(response => {
+        setPoints(response.data)
       })
     }, [])
 
@@ -89,31 +110,37 @@ const Points = () => {
                       initialPosition[0] !== 0 && (
 
                         <MapContainer 
-                        initialRegion={{
-                            latitude: initialPosition[0],
-                            longitude: initialPosition[1],
-                            latitudeDelta: 0.014,
-                            longitudeDelta: 0.014
-                        }} 
-                        style={styles.map}
-                      >
-                        <Marker
-                            onPress={handleNavigateDetail}
-                            style={styles.mapMarker} 
-                            coordinate={{
-                                latitude: -15.7868392,
-                                longitude: -47.8723759,
-                            }}
-                        >   
-                            <View style={styles.mapMarkerContainer}>
-                                <Image 
-                                    style={styles.mapMarkerImage} 
-                                    source={{ uri: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=467&q=60' }}>
-                                </Image>
-                                <Text style={styles.mapMarkerTitle}>Market</Text>
-                            </View>
-                        </Marker>
-                    </MapContainer>
+                          initialRegion={{
+                              latitude: initialPosition[0],
+                              longitude: initialPosition[1],
+                              latitudeDelta: 0.014,
+                              longitudeDelta: 0.014
+                          }} 
+                          style={styles.map}
+                        >
+                          {
+                            points.map(point => (
+                                <Marker
+                                  key={String(point.id)}
+                                  style={styles.mapMarker} 
+                                  onPress={handleNavigateDetail}
+                                  coordinate={{
+                                      latitude: point.latitude,
+                                      longitude: point.longitude,
+                                  }}
+                                  >   
+                                  <View style={styles.mapMarkerContainer}>
+                                      <Image 
+                                          style={styles.mapMarkerImage} 
+                                          source={{ uri: point.image }}>
+                                      </Image>
+                                      <Text style={styles.mapMarkerTitle}>{point.name}</Text>
+                                  </View>
+                              </Marker>
+                            ))
+
+                          }
+                      </MapContainer>
 
                       )
                     }
