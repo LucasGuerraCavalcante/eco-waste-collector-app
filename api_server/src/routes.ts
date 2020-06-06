@@ -33,6 +33,8 @@ routes.post(
             uf: Joi.string().required().max(2),
             items: Joi.string().required(),
         })
+    }, {
+        abortEarly: false
     }),
     pointsController.create
 )
